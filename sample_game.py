@@ -1,10 +1,11 @@
 """ a turn based fighter game"""
 
-class HumanPlayer:
-    """The user playing the game
+
     
-    Attributes:
-    name (str): the person's name.
-    roster (open_file): roster of fighters user can choose from"""
+class ComputerPlayer:
+    """algorthim that cpu reads
     
-    
+    attributes:
+    atttack power(int) how strong cpu is
+    HP(int) how much health cpu has
+    """
