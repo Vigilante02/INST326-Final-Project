@@ -2,6 +2,7 @@ import json
 import random
 import argparse
 
+
 class Final:
     def __init__(self,fighters,computer_turn,player_turn, computer_fighter, player_hp, computer_hp, selected_fighter):
         self.fighters = fighters
