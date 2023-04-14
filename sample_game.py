@@ -10,11 +10,8 @@ class Player:
 
     Attributes:
     - name (str): The name of the player
-    - level (int): The player's level
     - attack_power (int): The player's attack power
-    - defense_power (int): The player's defense power
-    - hp (int): The player's health points
-    - max_hp (int): The player's maximum health points
+   
     """
     def __init__(self, name, level, attack_power, defense_power):
         self.name = name
@@ -34,7 +31,7 @@ class Player:
         if other_player.defense_power >= self.attack_power:
             print(f"{self.name}'s attack was ineffective against {other_player.name}!")
             return
-        damage = Damage(self.attack_power, other_player.defense_power).calculate()
+        damage = damage(self.attack_power, other_player.defense_power).calculate()
         print(f"{self.name} attacks {other_player.name} for {damage} damage!")
         other_player.take_damage(damage)
     
