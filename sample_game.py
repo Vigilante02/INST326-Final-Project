@@ -62,7 +62,7 @@ class Final:
         
     def begin(computer_turn,fighters, computer_fighter, computer_hp, player_hp):
         cpu_move = random.choice(["attack", "heal"])
-        if computer_turn == True & cpu_move == "attack":
+        if computer_turn == True and cpu_move == "attack":
             attack_power = fighters[computer_fighter]['attack_power']
             damage =int(attack_power)
             player_hp -= damage
@@ -76,13 +76,21 @@ class Final:
             
     print(f"\nPlayer health: {player_hp}, Computer health: {computer_hp}")
     
-    def you_begin(player_turn, fighters, computer_fighter, selected_fighter,computer_hp):
-        selected_move = input("\nSelect your move: Attack, deal {attack_power} to the opponent, \nHeal, add to your health by {heal_power}")
-        if player_turn == True & selected_move == "attack":
-            attack_power = fighters[selected_fighter]['attack_power']
-            damage = int(attack_power)
-            computer_hp -= damage
-            print(f"n{selected_fighter} attacks the computer player for {damage} damage!")
+    def you_begin(player_turn, fighters, computer_fighter, selected_fighter, computer_hp):
+        if player_turn:
+            selected_move = input("\nSelect your move: Attack, deal {attack_power} to the opponent, \nHeal, add to your health by {heal_power}")
+            if selected_move == "attack":
+                attack_power = fighters[selected_fighter]['attack_power']
+                damage = int(attack_power)
+                computer_hp -= damage
+                print(f"n{selected_fighter} attacks the computer player for {damage} damage!")
+            elif selected_move == "heal":
+                heal_power = fighters[selected_fighter]['heal_power']
+                recover = int(heal_power)
+                player_hp += recover
+                print(f"{selected_fighter} heals themselves for {recover} health!")
+        else:
+            print("It's not your turn!")
             
         
         
