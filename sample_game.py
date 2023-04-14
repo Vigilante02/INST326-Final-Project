@@ -15,7 +15,7 @@ class Final:
 
     def main():
         "Function that welcomes player and explains rules"
-    print("\tWelcome to our Fighter Game by Ross, Ryan and Noah! This is a turn based battle game where")
+    print("\tWelcome to Showup, Showout, Showdown! This is a turn based battle game where")
     print("\tthere can only be one winner!")
 
     print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack")
