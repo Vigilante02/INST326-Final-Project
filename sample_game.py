@@ -44,7 +44,7 @@ class Final:
         self.fighters = {}
         for line in fighter_file.readlines():
             fighter, attack_power, heal_power = line.strip().split(',')
-            self.fighters[fighter] = {'attack_power': int(attack_power), 'heal_power': int(heal_power)}
+            self.fighters[fighter] = f'Attack Power: {int(attack_power)} Heal Power: {int(heal_power)}'
 
         fighter_file.close()
         
