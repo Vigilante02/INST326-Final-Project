@@ -1,115 +1,105 @@
 import json
 import random
-import argparse
 
 class Final:
-    def __init__(self,fighters,computer_turn,player_turn, computer_fighter, player_hp, computer_hp, selected_fighter):
-        self.fighters = fighters
-        self.computer_turn = computer_turn
-        self.player_turn = player_turn
-        self.computer_fighter = computer_fighter
-        self.player_hp = player_hp
-        self.computer_hp = computer_hp
-        self.selected_fighter = selected_fighter
+    def __init__(self):
+        self.main()
+        self.roster()
+        self.begin()
+        self.you_begin()
+        self.Match()
         
 
-    def main():
+    def main(self):
         "Function that welcomes player and explains rules"
-    print("\tWelcome to Showup, Showout, Showdown! This is a turn based battle game where")
-    print("\tthere can only be one winner!")
+        print("\tWelcome to our Fighter Game by Ross, Ryan and Noah! This is a turn based battle game where")
+        print("\tthere can only be one winner!")
 
-    print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack")
-    print("\nEach player starts with 100 health, and the first to get their oppenent to 0 wins!")
-    play_more = True
+        print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack")
+        print("\nEach player starts with 100 health, and the first to get their opponent to 0 wins!")
+        play_more = True
 
-    while play_more:
-        winner = None
-        player_hp = 100
-        computer_hp = 100
+        while play_more:
+            winner = None
+            self.player_hp = 100
+            self.computer_hp = 100
+            
+            turn = random.randint(1,2)
+            if turn == 1:
+                self.player_turn = True
+                self.computer_turn = False
+                print("\nYou will go first.")
+            else:
+                self.player_turn = False
+                self.computer_turn = True
+                print("\nComputer will go first.")
+            
+            print("\nPlayer health: ", self.player_hp, "Computer health: ", self.computer_hp)
+            print("\nBut first PICK YOUR CHARACTER!!!!")
         
-        turn = random.randint(1,2)
-        if turn == 1:
-            player_turn = True
-            computer_turn = False
-            print("\nYou will go first.")
-        else:
-            player_turn = False
-            computer_turn = True
-            print("\nComputer will go first.")
+            play_more = False
         
-        print("\nPlayer health: ", player_hp, "Computer health: ", computer_hp)
-        print("\nBut first PICK YOUR CHARACTER!!!!")
-        play_more = False
-    
-    def roster():   
+    def roster(self):   
         fighter_file = open('fighters.txt', 'r')
-        fighters = {}
+        self.fighters = {}
         for line in fighter_file.readlines():
             fighter, attack_power, heal_power = line.strip().split(',')
-            fighters[fighter] = {'attack_power': int(attack_power), 'heal_power': int(heal_power)}
+            self.fighters[fighter] = {'attack_power': int(attack_power), 'heal_power': int(heal_power)}
 
         fighter_file.close()
         
-        print(fighters)
-        selected_fighter = input("Please enter the name of your fighter: ")
-        if selected_fighter in fighters:
-            print(fighters[selected_fighter])
+        print(self.fighters)
+        self.selected_fighter = input("Please enter the name of your fighter: ")
+        if self.selected_fighter in self.fighters:
+            print(self.fighters[self.selected_fighter])
         else:
             print("Invalid fighter name.")
-        computer_fighter = random.choice(list(fighters.keys()))
-        print(f"The computer has selected {computer_fighter}.")
-        
-        
-    def begin(computer_turn,fighters, computer_fighter, computer_hp, player_hp):
+        self.computer_fighter = random.choice(list(self.fighters.keys()))
+        print(f"The computer has selected {self.computer_fighter}.")
+        self.cpu_powers = self.fighters[self.computer_fighter]
+        attack_cpu = self.cpu_powers['attack_power']
+        heal_cpu = self.cpu_powers['heal_power']
+    def begin(self):
         cpu_move = random.choice(["attack", "heal"])
-        if computer_turn == True and cpu_move == "attack":
-            attack_power = fighters[computer_fighter]['attack_power']
+        if self.computer_turn == True and cpu_move == "attack":
+            attack_power = self.cpu_powers['attack_power']
             damage =int(attack_power)
-            player_hp -= damage
-            print(f"\n{computer_fighter} attacks the player for {damage} damage!")
+            self.player_hp -= damage
+            print(f"\n{self.computer_fighter} attacks the player for {damage} damage!")
         
-        elif computer_turn == True & cpu_move == "heal":
-            heal_power = fighters[computer_fighter]['heal_power']
-            save = computer_fighter[heal_power]
-            computer_hp += save
-            print(f"\n{computer_fighter} heals themself for {save} health!")
+        elif self.computer_turn == True and cpu_move == "heal":
+            heal_power = self.fighters[self.computer_fighter]['heal_power']
+            save = self.cpu_powers[heal_power]
+            self.computer_hp += save
+            print(f"\n{self.computer_fighter} heals themself for {save} health!")
             
-    print(f"\nPlayer health: {player_hp}, Computer health: {computer_hp}")
+        print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
     
-    def you_begin(player_turn, fighters, computer_fighter, selected_fighter, computer_hp):
-        if player_turn:
-            selected_move = input("\nSelect your move: Attack, deal {attack_power} to the opponent, \nHeal, add to your health by {heal_power}")
-            if selected_move == "attack":
-                attack_power = fighters[selected_fighter]['attack_power']
-                damage = int(attack_power)
-                computer_hp -= damage
-                print(f"n{selected_fighter} attacks the computer player for {damage} damage!")
-            elif selected_move == "heal":
-                heal_power = fighters[selected_fighter]['heal_power']
-                recover = int(heal_power)
-                player_hp += recover
-                print(f"{selected_fighter} heals themselves for {recover} health!")
-        else:
-            print("It's not your turn!")
+    def you_begin(self):
+        player_move = input("\nSelect your move: Attack, deal {attack_power} to the opponent, \nHeal, add to your health by {heal_power}")
+        if self.player_turn == True and player_move == "attack":
+            attack_power = self.fighters[self.selected_fighter]['attack_power']
+            damage =int(attack_power)
+            self.computer_hp -= damage
+            print(f"\n{self.selected_fighter} attacks the computer for {damage} damage!")
+        
+        elif self.player_turn == True and player_move == "heal":
+            heal_power = self.fighters[self.selected_fighter]['heal_power']
+            save = self.selected_fighter[heal_power]
+            self.player_hp += save
+            print(f"\n{self.selected_fighter} heals themself for {save} health!")
             
+        print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
+    def Match(self):
+        if self.player_hp <= 0:
+            self.winner = self.computer_fighter
+            print("You lost game over")
+            self.play_more = False
+        elif self.computer_hp <= 0:
+            self.winner = self.selected_fighter
+            print("You won congrats!!!")
+            self.play_more = False    
         
         
-
-
-
-
-
-    main()
-    roster()
-    begin()
-
-class Damage: 
-    
-    def __init__(self, attack, defense):
-        self.attack = attack
-        self.defense = defense
         
-    def calc_dmg(self):
-        dmg = self.attack - (0.5 * self.defense)
-        return dmg
-        
+test = Final()
