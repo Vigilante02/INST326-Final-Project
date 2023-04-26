@@ -3,14 +3,14 @@ import random
 
 class Final:
     def __init__(self):
-        self.main()
+        self.welcome()
         self.roster()
         self.begin()
         self.you_begin()
         self.Match()
         
 
-    def main(self):
+    def welcome(self):
         "Function that welcomes player and explains rules"
         print("\tWelcome to our Fighter Game by Ross, Ryan and Noah! This is a turn based battle game where")
         print("\tthere can only be one winner!")
@@ -57,13 +57,11 @@ class Final:
         self.computer_fighter = random.choice(list(self.fighters.keys()))
         print(f"The computer has selected {self.computer_fighter}.")
         self.cpu_powers = self.fighters[self.computer_fighter]
-        attack_cpu = self.cpu_powers['attack_power']
-        heal_cpu = self.cpu_powers['heal_power']
     def begin(self):
         cpu_move = random.choice(["attack", "heal"])
-        self.cpu_attack_power = self.fighters[self.computer_fighter]['attack_power']
+        self.cpu_attack_power = int(self.fighters[self.computer_fighter].split()[2])
         self.damage =int(self.cpu_attack_power)
-        self.cpu_heal_power = self.fighters[self.computer_fighter]['heal_power']
+        self.cpu_heal_power = int(self.fighters[self.computer_fighter].split()[-1])
         self.cpu_save = int(self.cpu_heal_power)
         if self.computer_turn == True and cpu_move == "attack":
             self.player_hp -= self.damage
@@ -76,11 +74,11 @@ class Final:
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
     
     def you_begin(self):
-        self.attack_power = self.fighters[self.selected_fighter]['attack_power']
+        self.attack_power = int(self.fighters[self.selected_fighter].split()[2])
         self.damage =int(self.attack_power)
-        self.heal_power = self.fighters[self.selected_fighter]['heal_power']
+        self.heal_power = int(self.fighters[self.selected_fighter].split()[-1])
         self.save = int(self.heal_power)
-        player_move = input(f"\nSelect your move: Attack, deal {self.attack_power} to the opponent, \nHeal, add to your health by {self.heal_power}: ")
+        player_move = input(f"\nSelect your move: Attack: deal {self.attack_power} to the opponent, \nHeal: add to your health by {self.heal_power}: ")
         if self.player_turn == True and player_move == "attack":
             self.computer_hp -= self.damage
             print(f"\n{self.selected_fighter} attacks the computer for {self.damage} damage!")
@@ -100,6 +98,6 @@ class Final:
             print("You won congrats!!!")
             self.play_more = False    
         
+def main():
+        gametest = Final()
         
-        
-test = Final()
