@@ -1,4 +1,5 @@
 Walter White,25, 35
 Patrick Mahomes,40, 20
-Yoda,35, 20
+Bo-Katan Kryze,35, 20
 Spongebob,10, 50
+Shrek, 30, 30
