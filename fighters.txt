@@ -1,4 +1,12 @@
 Walter White,25, 35
+Jon Snow, 25, 35
+Lara Croft, 20, 40
+Vector, 20, 40
+Gamora, 45, 15
+Eleven, 45, 15
 Patrick Mahomes,40, 20
-Yoda,35, 20
-Spongebob,10, 50
+Hermione Granger, 40, 20
+Bo-Katan Kryze,35, 25
+Harley Quinn, 35, 25
+Shrek, 30, 30
+Rick Sanchez, 30, 30
