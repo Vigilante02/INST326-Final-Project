@@ -60,16 +60,95 @@ class Final:
         self.cpu_fighter = random.choice(list(self.fighters.keys()))
         print(f"The computer has selected {self.cpu_fighter}.")
         self.cpu_powers = self.fighters[self.cpu_fighter]
-    def Match(self):
+    
+    def computer_move(self):
+        cpu_move = random.choice(["attack", "heal"])
+        if self.computer_turn == True and cpu_move == "attack":
+            attack_power = self.cpu_powers['attack_power']
+            if random.random() < 0.2:
+                damage = int(attack_power) * 2
+                print(f"\n{self.cpu_fighter} lands a critical hit on {self.player_name} for {damage} damage!")
+            else:
+                damage = int(attack_power)
+                print(f"\n{self.cpu_fighter} attacks {self.player_name} for {damage} damage!")
+            self.player_hp -= damage
+        
+        elif self.computer_turn == True and cpu_move == "heal":
+            heal_power = self.cpu_powers['heal_power']
+            save = int(heal_power)
+            self.computer_hp += save
+            print(f"\n{self.cpu_fighter} heals themselves for {save} health!")
+    
+        print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
+        
+    def player_move(self):
+        player_move = ""
+        while player_move not in ["attack", "heal"]:
+            player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ")
+            if player_move not in ["attack", "heal"]:
+                print("Invalid move. Please select either attack or heal.")
+
+        if self.player_turn == True and player_move == "attack":
+            attack_power = self.fighters[self.selected_fighter]['attack_power']
+
+            if random.random() < 0.2:
+                damage = int(attack_power) * 2
+                print(f"\n{self.selected_fighter} lands a critical hit on {self.cpu_fighter} for {damage} damage!")
+            else:
+                damage = int(attack_power)
+                print(f"\n{self.selected_fighter} attacks {self.cpu_fighter} for {damage} damage!")
+
+            self.computer_hp -= damage
+        elif self.player_turn == True and player_move == "heal":
+            heal_power = self.fighters[self.selected_fighter]['heal_power']
+            save = int(heal_power)
+            self.player_hp += save
+            print(f"\n{self.selected_fighter} heals themselves for {save} health!")
+            print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
+
+
+    def determine_winner(self):
         if self.player_hp <= 0:
-            self.winner = self.computer_fighter
-            print("You lost game over")
-            self.play_more = False
+            self.winner = "Computer"
         elif self.computer_hp <= 0:
-            self.winner = self.selected_fighter
-            print("You won congrats!!!")
-            self.play_more = False    
-#Test from Ross        
+            self.winner = self.player_name
+
+    def play_again(self):
+        play_again = ""
+        while play_again not in ["yes", "no"]:
+            play_again = input("Would you like to play again? (yes/no): ")
+            if play_again not in ["yes", "no"]:
+                print("Invalid choice. Please enter either yes or no.")
+            if play_again == "no":
+                self.play_more = False
+
+    def play_game(self):
+        self.welcome()
+        self.load_fighters()
+        while self.play_more:
+            self.selected_fighter = ""
+            self.player_hp = 100
+            self.computer_hp = 100
+            self.select_fighter()                
+            while self.winner == None:
+                self.player_turn = True
+                self.player_move()
+                self.determine_winner()
+                if self.winner != None:
+                    break
+                self.computer_turn = True
+                self.computer_move()
+                self.determine_winner()
+            print(f"\nThe winner is {self.winner}!")
+            self.play_again()
+        print("Thanks for playing!")
+            
 def main():
-        gametest = Final()
+    player_name = input("Enter your name: ")
+    game = Final(player_name)
+    game.play_game()
+
+
+if __name__ == '__main__':
+    main()
         
