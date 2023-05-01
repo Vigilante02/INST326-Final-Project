@@ -55,18 +55,22 @@ class Final:
 
     def select_fighter(self):
         print(self.fighters)
+        self.selected_fighter = input("Please enter the name of your fighter: ")
         while self.selected_fighter not in self.fighters:
+            print("Invalid fighter name.")
             self.selected_fighter = input("Please enter the name of your fighter: ")
-            if self.selected_fighter not in self.fighters:
-                print("Invalid fighter name.")
-        print(f"{self.fighters[self.selected_fighter]}")
+        print(f"{self.selected_fighter}")
+        turn_choice = random.choice(['up', 'down'])
+        self.player_turn = True if turn_choice == 'up' else False
+        print(f"{self.player_name} shows up first!" if self.player_turn else "Computer shows up first!")
         self.cpu_fighter = random.choice(list(self.fighters.keys()))
         print(f"The computer has selected {self.cpu_fighter}.")
         self.cpu_powers = self.fighters[self.cpu_fighter]
     
     def computer_move(self):
+        self.computer_turn = True
         cpu_move = random.choice(["attack", "heal"])
-        if self.computer_turn == True and cpu_move == "attack":
+        if cpu_move == "attack":
             attack_power = self.cpu_powers['attack_power']
             if random.random() < 0.15:
                 damage = int(attack_power) * 2
@@ -75,23 +79,26 @@ class Final:
                 damage = int(attack_power)
                 print(f"\n{self.cpu_fighter} attacks {self.player_name} for {damage} damage!")
             self.player_hp -= damage
-        
-        elif self.computer_turn == True and cpu_move == "heal":
+
+        elif cpu_move == "heal":
             heal_power = self.cpu_powers['heal_power']
             save = int(heal_power)
             self.computer_hp += save
             print(f"\n{self.cpu_fighter} heals themselves for {save} health!")
-    
+
+        self.computer_turn = False
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
-        
+
+
     def player_move(self):
+        self.player_turn = True
         player_move = ""
         while player_move not in ["attack", "heal"]:
             player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ")
             if player_move not in ["attack", "heal"]:
                 print("Invalid move. Please select either attack or heal.")
 
-        if self.player_turn == True and player_move == "attack":
+        if player_move == "attack":
             attack_power = self.fighters[self.selected_fighter]['attack_power']
 
             if random.random() < 0.15:
@@ -102,12 +109,14 @@ class Final:
                 print(f"\n{self.selected_fighter} attacks {self.cpu_fighter} for {damage} damage!")
 
             self.computer_hp -= damage
-        elif self.player_turn == True and player_move == "heal":
+        elif player_move == "heal":
             heal_power = self.fighters[self.selected_fighter]['heal_power']
             save = int(heal_power)
-            self.player_hp += save
+            self.player_hp = min(self.player_hp + save, 100)
             print(f"\n{self.selected_fighter} heals themselves for {save} health!")
-            print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
+
+        self.player_turn = False
+        print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
     def determine_winner(self):
         if self.player_hp <= 0:
@@ -149,8 +158,7 @@ class Final:
             
             print(f"\nThe winner is {self.winner}!")
             self.play_again()
-    
-    print("Thanks for playing!")
+        print(f"Thanks for playing, {self.player_name}! Show up and show out again soon!")
             
 def main():
     player_name = input("Enter your name: ")
