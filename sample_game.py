@@ -65,7 +65,7 @@ class Final:
         cpu_move = random.choice(["attack", "heal"])
         if self.computer_turn == True and cpu_move == "attack":
             attack_power = self.cpu_powers['attack_power']
-            if random.random() < 0.2:
+            if random.random() < 0.15:
                 damage = int(attack_power) * 2
                 print(f"\n{self.cpu_fighter} lands a critical hit on {self.player_name} for {damage} damage!")
             else:
@@ -91,7 +91,7 @@ class Final:
         if self.player_turn == True and player_move == "attack":
             attack_power = self.fighters[self.selected_fighter]['attack_power']
 
-            if random.random() < 0.2:
+            if random.random() < 0.15:
                 damage = int(attack_power) * 2
                 print(f"\n{self.selected_fighter} lands a critical hit on {self.cpu_fighter} for {damage} damage!")
             else:
@@ -105,7 +105,6 @@ class Final:
             self.player_hp += save
             print(f"\n{self.selected_fighter} heals themselves for {save} health!")
             print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
-
 
     def determine_winner(self):
         if self.player_hp <= 0:
