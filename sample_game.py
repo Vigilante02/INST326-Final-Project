@@ -105,12 +105,19 @@ class Final:
             self.player_hp += save
             print(f"\n{self.selected_fighter} heals themselves for {save} health!")
             print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
-
+        
     def determine_winner(self):
         if self.player_hp <= 0:
-            self.winner = "Computer"
+            print(f"{self.cpu_fighter} wins! {self.player_name} has been defeated.")
+            self.winner = self.cpu_fighter
+            self.play_more = False
         elif self.computer_hp <= 0:
+            print(f"{self.player_name} wins! {self.cpu_fighter} has been defeated.")
             self.winner = self.player_name
+            self.play_more = False
+        elif self.player_hp <= 0 and self.computer_hp <= 0:
+            return "Both players are knocked out! It's a tie!"
+        else: return None
 
     def play_again(self):
         play_again = ""
