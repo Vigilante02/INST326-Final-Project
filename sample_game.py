@@ -43,7 +43,7 @@ class Final:
         print("\nEach player starts with 100 health, and the first to get their opponent to 0 wins!")
 
     def load_fighters(self):
-        with open('fighters.txt', 'r', encoding='utf-8') as fighter_file:
+        with open('fighters.txt', mode = 'r', encoding='utf-8') as fighter_file:
             for line in fighter_file.readlines():
                 fighter, attack_power, heal_power = line.strip().split(',')
                 self.fighters[fighter] = {"attack_power": int(attack_power), "heal_power": int(heal_power)}
@@ -146,7 +146,7 @@ def main():
     player_name = input("Enter your name: ")
     game = Final(player_name)
     game.play_game()
-
+    
 
 if __name__ == '__main__':
     main()
