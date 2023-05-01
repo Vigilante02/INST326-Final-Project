@@ -106,15 +106,11 @@ class Final:
             print(f"\n{self.selected_fighter} heals themselves for {save} health!")
             print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
-    def determine_winner(player_hp, computer_hp):
-        if player_hp <= 0 and computer_hp <= 0:
-            return "Both players are knocked out! It's a tie!"
-        elif player_hp <= 0:
-            return "The computer wins!"
-        elif computer_hp <= 0:
-            return "The player wins!"
-        else:
-            return None
+    def determine_winner(self):
+        if self.player_hp <= 0:
+            self.winner = "Computer"
+        elif self.computer_hp <= 0:
+            self.winner = self.player_name
 
     def play_again(self):
         play_again = ""
@@ -128,23 +124,30 @@ class Final:
     def play_game(self):
         self.welcome()
         self.load_fighters()
+        
         while self.play_more:
             self.selected_fighter = ""
             self.player_hp = 100
             self.computer_hp = 100
+            self.winner = None
             self.select_fighter()                
-            while self.winner == None:
+            
+            while self.winner is None:
                 self.player_turn = True
                 self.player_move()
                 self.determine_winner()
-                if self.winner != None:
+                
+                if self.winner is not None:
                     break
+                
                 self.computer_turn = True
                 self.computer_move()
                 self.determine_winner()
+            
             print(f"\nThe winner is {self.winner}!")
             self.play_again()
-        print("Thanks for playing!")
+    
+    print("Thanks for playing!")
             
 def main():
     player_name = input("Enter your name: ")
