@@ -128,10 +128,8 @@ class Final:
         play_again = ""
         while play_again not in ["yes", "no"]:
             play_again = input("Would you like to play again? (yes/no): ")
-            if play_again not in ["yes", "no"]:
-                print("Invalid choice. Please enter either yes or no.")
-            if play_again == "no":
-                self.play_more = False
+            print("Invalid choice. Please enter either yes or no.") if play_again not in ["yes", "no"] else None
+            self.play_more = False if play_again == "no" else True
 
     def play_game(self):
         self.welcome()
