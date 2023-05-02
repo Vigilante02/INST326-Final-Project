@@ -119,10 +119,8 @@ class Final:
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
     def determine_winner(self):
-        if self.player_hp <= 0:
-            self.winner = "Computer"
-        elif self.computer_hp <= 0:
-            self.winner = self.player_name
+        self.winner = "Computer" if self.player_hp <= 0 else self.player_name if self.computer_hp <= 0 else None
+
 
     def play_again(self):
         play_again = ""
