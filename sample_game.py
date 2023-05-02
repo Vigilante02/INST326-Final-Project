@@ -40,7 +40,7 @@ class Final:
         print("\tthere can only be one winner!")
 
         print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack.")
-        print("\nEach player starts with 100 health, and the first to get their opponent to 0 wins!")
+        print("\nEach player starts with 100 health, and the first to get their opponent to 0 wins!\n")
 
     def load_fighters(self):
         with open('fighters.txt', mode='r', encoding='utf-8') as fighter_file:
