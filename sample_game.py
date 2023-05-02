@@ -36,8 +36,8 @@ class Final:
     
     def welcome(self):
         "Function that welcomes player and explains rules"
-        print("\tWelcome to Showup, Showout, Showdown! This is a turn based battle game where")
-        print("\tthere can only be one winner!")
+        print(f"Thank you for showing up, {self.player_name}! Welcome to Showup, Showout, Showdown!")
+        print("\nThis is a turn-based battle game where you either attack your opponent or heal yourself until there is only one fighter left standing!")
 
         print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack.")
         print("\nEach player starts with 100 health, and the first to get their opponent to 0 wins!\n")
