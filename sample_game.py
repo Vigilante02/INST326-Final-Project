@@ -71,48 +71,35 @@ class Final:
         cpu_move = random.choice(["attack", "heal"])
         if cpu_move == "attack":
             attack_power = self.cpu_powers['attack_power']
-            if random.random() < 0.1:
-                damage = int(attack_power) * 2
-                print(f"\n{self.cpu_fighter} lands a critical hit on {self.player_name} for {damage} damage!")
-            else:
-                damage = int(attack_power)
-                print(f"\n{self.cpu_fighter} attacks {self.player_name} for {damage} damage!")
+            damage = int(attack_power * (2 if random.random() < 0.15 else 1))
+            print(f"\n{self.cpu_fighter} {'lands a critical hit on' if damage == 2 * attack_power else 'attacks'} {self.player_name} for {damage} damage!")
             self.player_hp -= damage
-
         elif cpu_move == "heal":
             heal_power = self.cpu_powers['heal_power']
             save = int(heal_power)
             self.computer_hp += save
             print(f"\n{self.cpu_fighter} heals themselves for {save} health!")
-
         self.computer_turn = False
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
 
     def player_move(self):
         self.player_turn = True
-        player_move = ""
-        while player_move not in ["attack", "heal"]:
+        while True:
             player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ")
-            if player_move not in ["attack", "heal"]:
-                print("Invalid move. Please select either attack or heal.")
-
+            if player_move in ["attack", "heal"]:
+                break
+            print("Invalid move. Please select either attack or heal.")
         if player_move == "attack":
             attack_power = self.fighters[self.selected_fighter]['attack_power']
-            if random.random() < 0.1:
-                damage = int(attack_power) * 2
-                print(f"\n{self.selected_fighter} lands a critical hit on {self.cpu_fighter} for {damage} damage!")
-            else:
-                damage = int(attack_power)
-                print(f"\n{self.selected_fighter} attacks {self.cpu_fighter} for {damage} damage!")
-
+            damage = int(attack_power * (2 if random.random() < 0.15 else 1))
+            print(f"\n{self.selected_fighter} {'lands a critical hit on' if damage == 2 * attack_power else 'attacks'} {self.cpu_fighter} for {damage} damage!")
             self.computer_hp -= damage
         elif player_move == "heal":
             heal_power = self.fighters[self.selected_fighter]['heal_power']
             save = int(heal_power)
-            self.player_hp = min(self.player_hp + save, 100)
+            self.player_hp += save
             print(f"\n{self.selected_fighter} heals themselves for {save} health!")
-
         self.player_turn = False
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
