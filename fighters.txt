@@ -1,4 +1,4 @@
-Heisenberg, 30, 20
+Walter White, 30, 20
 Jon Snow, 30, 20
 Din Djarin, 25, 25
 Vector, 25, 25

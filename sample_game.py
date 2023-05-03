@@ -35,6 +35,12 @@ class Final:
     def __repr__(self):
         return f"Final(player_name='{self.player_name}', player_hp={self.player_hp}, computer_hp={self.computer_hp})"
     
+    def __contains__(self, item):
+        if item in self.fighters:
+            return str(self.fighters[item])
+        else:
+            return f"{item} is not in the fighters list."
+    
     def welcome(self):
         "Function that welcomes player and explains rules"
         print(f"Thank you for showing up, {self.player_name}! Welcome to Showup, Showout, Showdown!")
@@ -64,6 +70,8 @@ class Final:
         self.cpu_fighter = random.choice(list(remaining_fighters))
         print(f"The computer has selected {self.cpu_fighter}.")
         self.cpu_powers = self.fighters[self.cpu_fighter]
+        if self.selected_fighter in self:
+            print(f"{self.selected_fighter}: Attack Power: {self.fighters[self.selected_fighter]['attack_power']}, Heal Power: {self.fighters[self.selected_fighter]['heal_power']}")
     
     def computer_move(self):
         self.computer_turn = True
@@ -82,14 +90,13 @@ class Final:
         self.computer_turn = False
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
-
     def player_move(self):
         self.player_turn = True
         valid_moves = ["attack", "heal"]
         move_pattern = re.compile(r"^\b(attack|heal)\b$")
 
         while True:
-            player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ").lower()
+            player_move = input(f"\n{self.selected_fighter}, select your move: Attack, Heal: ").lower()
             if move_pattern.match(player_move):
                 if player_move in valid_moves:
                     break
@@ -110,7 +117,6 @@ class Final:
 
     def determine_winner(self):
         self.winner = "Computer" if self.player_hp <= 0 else self.player_name if self.computer_hp <= 0 else None
-
 
     def play_again(self):
         play_again = ""
