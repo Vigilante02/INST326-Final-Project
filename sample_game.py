@@ -63,7 +63,7 @@ class Final:
         turn_choice = random.choice(['up', 'down'])
         self.player_turn = True if turn_choice == 'up' else False
         print(f"{self.player_name} shows up first!" if self.player_turn else "Computer shows up first!")
-        self.cpu_fighter = random.choice(list(self.fighters.keys()))
+        self.cpu_fighter = random.choice([fighter for fighter in self.fighters.keys()])
         print(f"The computer has selected {self.cpu_fighter}.")
         self.cpu_powers = self.fighters[self.cpu_fighter]
     
@@ -72,7 +72,7 @@ class Final:
         cpu_move = random.choice(["attack", "heal"])
         if cpu_move == "attack":
             attack_power = self.cpu_powers['attack_power']
-            if random.random() < 0.15:
+            if random.random() < 0.1:
                 damage = int(attack_power) * 2
                 print(f"\n{self.cpu_fighter} lands a critical hit on {self.player_name} for {damage} damage!")
             else:
@@ -100,8 +100,7 @@ class Final:
 
         if player_move == "attack":
             attack_power = self.fighters[self.selected_fighter]['attack_power']
-
-            if random.random() < 0.15:
+            if random.random() < 0.1:
                 damage = int(attack_power) * 2
                 print(f"\n{self.selected_fighter} lands a critical hit on {self.cpu_fighter} for {damage} damage!")
             else:
