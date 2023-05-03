@@ -54,7 +54,6 @@ class Final:
         fighter_file.close()
 
     def select_fighter(self):
-        print(self.fighters)
         self.selected_fighter = input("Please enter the name of your fighter: ")
         while self.selected_fighter not in self.fighters:
             print("Invalid fighter name.")
