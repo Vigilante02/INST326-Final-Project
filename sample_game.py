@@ -86,7 +86,7 @@ class Final:
     def player_move(self):
         self.player_turn = True
         while True:
-            player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ")
+            player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ").lower()
             if player_move in ["attack", "heal"]:
                 break
             print("Invalid move. Please select either attack or heal.")
