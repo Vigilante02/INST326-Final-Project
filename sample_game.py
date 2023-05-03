@@ -1,4 +1,5 @@
 import random
+import re
 
 class Final:
     def __init__(self, player_name, player_hp=100, computer_hp=100):
@@ -59,10 +60,8 @@ class Final:
             print("Invalid fighter name.")
             self.selected_fighter = input("Please enter the name of your fighter: ")
         print(f"{self.selected_fighter}")
-        turn_choice = random.choice(['up', 'down'])
-        self.player_turn = True if turn_choice == 'up' else False
-        print(f"{self.player_name} shows up first!" if self.player_turn else "Computer shows up first!")
-        self.cpu_fighter = random.choice([fighter for fighter in self.fighters.keys()])
+        remaining_fighters = set(self.fighters.keys()) - {self.selected_fighter}
+        self.cpu_fighter = random.choice(list(remaining_fighters))
         print(f"The computer has selected {self.cpu_fighter}.")
         self.cpu_powers = self.fighters[self.cpu_fighter]
     
@@ -71,8 +70,9 @@ class Final:
         cpu_move = random.choice(["attack", "heal"])
         if cpu_move == "attack":
             attack_power = self.cpu_powers['attack_power']
-            damage = int(attack_power * (2 if random.random() < 0.15 else 1))
-            print(f"\n{self.cpu_fighter} {'lands a critical hit on' if damage == 2 * attack_power else 'attacks'} {self.player_name} for {damage} damage!")
+            damage = int(attack_power * (1.5 if random.random() < 0.1 else 1))
+            critical_hit = damage > attack_power
+            print(f"\n{self.cpu_fighter} {'lands a critical hit on' if critical_hit else 'attacks'} {self.player_name} for {damage} damage!")
             self.player_hp -= damage
         elif cpu_move == "heal":
             heal_power = self.cpu_powers['heal_power']
@@ -85,15 +85,20 @@ class Final:
 
     def player_move(self):
         self.player_turn = True
+        valid_moves = ["attack", "heal"]
+        move_pattern = re.compile(r"^\b(attack|heal)\b$")
+
         while True:
             player_move = input(f"\n{self.player_name}, select your move: Attack ({self.fighters[self.selected_fighter]['attack_power']} attack power), Heal ({self.fighters[self.selected_fighter]['heal_power']} heal power): ").lower()
-            if player_move in ["attack", "heal"]:
-                break
+            if move_pattern.match(player_move):
+                if player_move in valid_moves:
+                    break
             print("Invalid move. Please select either attack or heal.")
         if player_move == "attack":
             attack_power = self.fighters[self.selected_fighter]['attack_power']
-            damage = int(attack_power * (2 if random.random() < 0.15 else 1))
-            print(f"\n{self.selected_fighter} {'lands a critical hit on' if damage == 2 * attack_power else 'attacks'} {self.cpu_fighter} for {damage} damage!")
+            damage = int(attack_power * (1.5 if random.random() < 0.1 else 1))
+            critical_hit = damage > attack_power
+            print(f"\n{self.selected_fighter} {'lands a critical hit on' if critical_hit else 'attacks'} {self.cpu_fighter} for {damage} damage!")
             self.computer_hp -= damage
         elif player_move == "heal":
             heal_power = self.fighters[self.selected_fighter]['heal_power']
@@ -142,7 +147,14 @@ class Final:
         print(f"Thanks for playing, {self.player_name}! Show up and show out again soon!")
             
 def main():
-    player_name = input("Enter your name: ")
+    name_pattern = re.compile(r"^[A-Za-z]+$")
+
+    while True:
+        player_name = input("Enter your name: ")
+        if name_pattern.match(player_name):
+            break
+        print("Invalid name. Please enter a name containing only letters.")
+
     game = Final(player_name)
     game.play_game()
     
