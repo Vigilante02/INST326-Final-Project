@@ -1,7 +1,7 @@
 import random
 import re
 
-class Final:
+class ShowupShowoutShowdown:
     def __init__(self, player_name, player_hp=100, computer_hp=100):
         self.player_name = player_name
         self.player_hp = player_hp
@@ -16,7 +16,7 @@ class Final:
         self.winner = None
     
     def __eq__(self, other):
-        return (isinstance(other, Final)
+        return (isinstance(other, ShowupShowoutShowdown)
                 and self.player_name == other.player_name
                 and self.player_hp == other.player_hp
                 and self.computer_hp == other.computer_hp
@@ -33,7 +33,7 @@ class Final:
         return f"Player: {self.player_name} | Player HP: {self.player_hp} | Computer HP: {self.computer_hp}"
     
     def __repr__(self):
-        return f"Final(player_name='{self.player_name}', player_hp={self.player_hp}, computer_hp={self.computer_hp})"
+        return f"ShowupShowoutShowdown(player_name='{self.player_name}', player_hp={self.player_hp}, computer_hp={self.computer_hp})"
     
     def __contains__(self, item):
         if item in self.fighters:
@@ -157,7 +157,7 @@ def main():
             break
         print("Invalid name. Please enter a name containing only letters.")
 
-    game = Final(player_name)
+    game = ShowupShowoutShowdown(player_name)
     game.play_game()
     
 
