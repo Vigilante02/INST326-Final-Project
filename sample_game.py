@@ -93,14 +93,12 @@ class Final:
     def player_move(self):
         self.player_turn = True
         valid_moves = ["attack", "heal"]
-        move_pattern = re.compile(r"^\b(attack|heal)\b$")
-
         while True:
             player_move = input(f"\n{self.selected_fighter}, select your move: Attack, Heal: ").lower()
-            if move_pattern.match(player_move):
+            if re.match(r"^\b(attack|heal)\b$", player_move):
                 if player_move in valid_moves:
                     break
-            print("Invalid move. Please select either attack or heal.")
+        print("Invalid move. Please select either attack or heal.")
         if player_move == "attack":
             attack_power = self.fighters[self.selected_fighter]['attack_power']
             damage = int(attack_power * (1.5 if random.random() < 0.1 else 1))
@@ -153,11 +151,9 @@ class Final:
         print(f"Thanks for playing, {self.player_name}! Show up and show out again soon!")
             
 def main():
-    name_pattern = re.compile(r"^[A-Za-z]+$")
-
     while True:
         player_name = input("Enter your name: ")
-        if name_pattern.match(player_name):
+        if re.match(r"^[A-Za-z]+$", player_name):
             break
         print("Invalid name. Please enter a name containing only letters.")
 
