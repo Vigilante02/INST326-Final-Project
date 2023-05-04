@@ -124,7 +124,7 @@ class ShowupShowoutShowdown:
         while not re.match(r'^(yes|no)$', play_again):
             play_again = input("Would you like to play again? (yes/no): ")
             print("Invalid choice. Please enter either yes or no.") if not re.match(r'^(yes|no)$', play_again) else None
-            self.play_more = True if play_again == "yes" else False
+            self.play_more = False if play_again == "no" else True
 
     def play_game(self):
         self.welcome()
@@ -166,4 +166,5 @@ def main():
 
 if __name__ == '__main__':
     main()
-        
+    
+    
