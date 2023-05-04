@@ -3,6 +3,13 @@ import re
 
 class ShowupShowoutShowdown:
     def __init__(self, player_name, player_hp=100, computer_hp=100):
+        """Initializes the attributes for the ShowupShowoutShowdown class.
+
+        Args:
+            player_name (str): Represents the name of the player.
+            player_hp (int, optional): Represents the health points of the player. Defaults to 100.
+            computer_hp (int, optional): Represents the health points of the computer. Defaults to 100.
+        """
         self.player_name = player_name
         self.player_hp = player_hp
         self.computer_hp = computer_hp
@@ -16,6 +23,14 @@ class ShowupShowoutShowdown:
         self.winner = None
     
     def __eq__(self, other):
+        """_summary_
+
+        Args:
+            other (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         return (isinstance(other, ShowupShowoutShowdown)
                 and self.player_name == other.player_name
                 and self.player_hp == other.player_hp
@@ -36,6 +51,14 @@ class ShowupShowoutShowdown:
         return f"ShowupShowoutShowdown(player_name='{self.player_name}', player_hp={self.player_hp}, computer_hp={self.computer_hp})"
     
     def __contains__(self, item):
+        """_summary_
+
+        Args:
+            item (_type_): _description_
+
+        Returns:
+            _type_: _description_
+        """
         if item in self.fighters:
             return str(self.fighters[item])
         else:
@@ -51,6 +74,8 @@ class ShowupShowoutShowdown:
         print(f"Please select your fighter, {self.player_name}!\n")
 
     def load_fighters(self):
+        """Method that loads in the fighters and their stats from the fighters.txt file
+        """
         with open('fighters.txt', mode='r', encoding='utf-8') as fighter_file:
             for line in fighter_file.readlines():
                 fighter, attack_power, heal_power = line.strip().split(',')
