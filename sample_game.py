@@ -46,8 +46,8 @@ class ShowupShowoutShowdown:
         print(f"Thank you for showing up, {self.player_name}! Welcome to Showup, Showout, Showdown!")
         print("\nThis is a turn-based battle game where you either attack your opponent or heal yourself until there is only one fighter left standing!")
 
-        print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack.")
-        print("\nEach player starts with 100 health, and the first to get their opponent to 0 wins!\n")
+        print("\nHow to play.\n\nPlayers take turns choosing a move. Moves can either be heal or attack, with a 10% chance of landing a critical.")
+        print("Fighters differ in heal and attack power.\nEach player starts with 100 health, and the first to get their opponent to 0 wins!\n")
         print(f"Please select your fighter, {self.player_name}!\n")
 
     def load_fighters(self):
@@ -85,9 +85,10 @@ class ShowupShowoutShowdown:
             self.player_hp -= damage
         elif cpu_move == "heal":
             heal_power = self.cpu_powers['heal_power']
-            save = int(heal_power)
-            self.computer_hp += save
-            print(f"\n{self.cpu_fighter} heals themselves for {save} health!")
+            heal_amount = int(heal_power * (1.5 if random.random() < 0.1 else 1))
+            critical_heal = heal_amount > heal_power
+            print(f"\n{self.cpu_fighter} {'critically heals' if critical_heal else 'heals'} for {heal_amount} health!")
+            self.computer_hp += heal_amount
         self.computer_turn = False
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
@@ -108,9 +109,10 @@ class ShowupShowoutShowdown:
             self.computer_hp -= damage
         elif player_move == "heal":
             heal_power = self.fighters[self.selected_fighter]['heal_power']
-            save = int(heal_power)
-            self.player_hp += save
-            print(f"\n{self.selected_fighter} heals themselves for {save} health!")
+            heal_amount = int(heal_power * (1.5 if random.random() < 0.1 else 1))
+            critical_heal = heal_amount > heal_power
+            print(f"\n{self.selected_fighter} {'critically heals' if critical_heal else 'heals'} for {heal_amount} health!")
+            self.player_hp += heal_amount
         self.player_turn = False
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
