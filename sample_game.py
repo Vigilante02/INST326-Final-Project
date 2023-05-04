@@ -42,7 +42,7 @@ class ShowupShowoutShowdown:
             return f"{item} is not in the fighters list."
     
     def welcome(self):
-        "Function that welcomes player and explains rules"
+        """Function that welcomes player and explains rules"""
         print(f"Thank you for showing up, {self.player_name}! Welcome to Showup, Showout, Showdown!")
         print("\nThis is a turn-based battle game where you either attack your opponent or heal yourself until there is only one fighter left standing!")
 
@@ -118,9 +118,9 @@ class ShowupShowoutShowdown:
 
     def play_again(self):
         play_again = ""
-        while play_again not in ["yes", "no"]:
+        while not re.match(r'^(yes|no)$', play_again):
             play_again = input("Would you like to play again? (yes/no): ")
-            print("Invalid choice. Please enter either yes or no.") if play_again not in ["yes", "no"] else None
+            print("Invalid choice. Please enter either yes or no.") if not re.match(r'^(yes|no)$', play_again) else None
             self.play_more = False if play_again == "no" else True
 
     def play_game(self):
