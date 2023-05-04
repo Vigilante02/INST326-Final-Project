@@ -120,12 +120,11 @@ class ShowupShowoutShowdown:
         self.winner = "Computer" if self.player_hp <= 0 else self.player_name if self.computer_hp <= 0 else None
 
     def play_again(self):
-        play_again = None
-        while not re.match(r'(?i)^(yes|no)$', play_again):
+        play_again = ""
+        while not re.match(r'^(yes|no)$', play_again):
             play_again = input("Would you like to play again? (yes/no): ")
-            if not re.match(r'(?i)^(yes|no)$', play_again):
-                print("Invalid choice. Please enter either yes or no.")
-        self.play_more = True if play_again.lower() == "yes" else False
+            print("Invalid choice. Please enter either yes or no.") if not re.match(r'^(yes|no)$', play_again) else None
+            self.play_more = True if play_again == "yes" else False
 
     def play_game(self):
         self.welcome()
