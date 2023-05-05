@@ -1,6 +1,17 @@
 import random
 import re
 
+class QuitInCase(Exception):
+    pass
+
+def quitinput(prompt):
+    userinput = input(prompt)
+    if userinput.strip().lower() == "quit":
+        raise QuitInCase
+    else: 
+        return userinput
+
+    
 class ShowupShowoutShowdown:
     def __init__(self, player_name, player_hp=100, computer_hp=100):
         """Initializes the attributes for the ShowupShowoutShowdown class.
@@ -21,6 +32,7 @@ class ShowupShowoutShowdown:
         self.computer_turn = False
         self.play_more = True
         self.winner = None
+    
     
     def __eq__(self, other):
         """_summary_
@@ -87,14 +99,14 @@ class ShowupShowoutShowdown:
         fighter_file.close()
 
     def select_fighter(self):
-        self.selected_fighter = input("Please enter the name of your fighter: ")
+        self.selected_fighter = quitinput("Please enter the name of your fighter: ")
         while self.selected_fighter not in self.fighters:
             print("Invalid fighter name.")
-            self.selected_fighter = input("Please enter the name of your fighter: ")
+            self.selected_fighter = quitinput("Please enter the name of your fighter: ")
         print(f"{self.selected_fighter}")
         remaining_fighters = set(self.fighters.keys()) - {self.selected_fighter}
         self.cpu_fighter = random.choice(list(remaining_fighters))
-        print(f"The computer has selected {self.cpu_fighter}.")
+        print(f"The computer has selected {self.cpu_fighter}!")
         self.cpu_powers = self.fighters[self.cpu_fighter]
         if self.selected_fighter in self:
             print(f"{self.selected_fighter}: Attack Power: {self.fighters[self.selected_fighter]['attack_power']}, Heal Power: {self.fighters[self.selected_fighter]['heal_power']}")
@@ -121,7 +133,7 @@ class ShowupShowoutShowdown:
         self.player_turn = True
         valid_moves = ["attack", "heal"]
         while True:
-            player_move = input(f"\n{self.selected_fighter}, select your move: Attack, Heal: ").lower()
+            player_move = quitinput(f"\n{self.selected_fighter}, select your move: Attack, Heal: ").lower()
             if re.match(r"^\b(attack|heal)\b$", player_move):
                 if player_move in valid_moves:
                     break
@@ -145,11 +157,13 @@ class ShowupShowoutShowdown:
         self.winner = "Computer" if self.player_hp <= 0 else self.player_name if self.computer_hp <= 0 else None
 
     def play_again(self):
-        play_again = ""
-        while not re.match(r'^(yes|no)$', play_again):
-            play_again = input("Would you like to play again? (yes/no): ")
-            print("Invalid choice. Please enter either yes or no.") if not re.match(r'^(yes|no)$', play_again) else None
-            self.play_more = False if play_again == "no" else True
+        while True:
+            play_again = quitinput("Would you like to play again? (yes/no): ")
+            if not re.match(r'(?i)^(yes|no)$', play_again):
+                print("Invalid choice. Please enter either yes or no.")
+            else: 
+                break
+        self.play_more = False if play_again.strip().lower() == "no" else True
 
     def play_game(self):
         self.welcome()
@@ -179,14 +193,18 @@ class ShowupShowoutShowdown:
         print(f"Thanks for playing, {self.player_name}! Show up and show out again soon!")
             
 def main():
-    while True:
-        player_name = input("Enter your name: ")
-        if re.match(r"^[A-Za-z]+$", player_name):
-            break
-        print("Invalid name. Please enter a name containing only letters.")
+    try: 
+        
+        while True:
+            player_name = quitinput("Enter your name: ")
+            if re.match(r"^[A-Za-z]+$", player_name):
+                break
+            print("Invalid name. Please enter a name containing only letters.")
 
-    game = ShowupShowoutShowdown(player_name)
-    game.play_game()
+        game = ShowupShowoutShowdown(player_name)
+        game.play_game()
+    except QuitInCase:
+        print("Come back next time :(")
     
 
 if __name__ == '__main__':
