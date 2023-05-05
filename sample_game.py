@@ -2,9 +2,25 @@ import random
 import re
 
 class QuitInCase(Exception):
+    """Creates the QuitInCase class.
+
+    Args:
+        Exception (class): The class for the Exception object.
+    """
     pass
 
 def quitinput(prompt):
+    """Function for inputs where the user wants to quit. 
+
+    Args:
+        prompt (str): Represents the input of the user. 
+
+    Raises:
+        QuitInCase: An exception that allows for a user to back out of the game.
+
+    Returns:
+        str: The input of the user.
+    """
     userinput = input(prompt)
     if userinput.strip().lower() == "quit":
         raise QuitInCase
@@ -194,7 +210,6 @@ class ShowupShowoutShowdown:
             
 def main():
     try: 
-        
         while True:
             player_name = quitinput("Enter your name: ")
             if re.match(r"^[A-Za-z]+$", player_name):
@@ -204,7 +219,7 @@ def main():
         game = ShowupShowoutShowdown(player_name)
         game.play_game()
     except QuitInCase:
-        print("Come back next time :(")
+        print("We hope you show up and show out another time!")
     
 
 if __name__ == '__main__':
