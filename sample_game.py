@@ -6,6 +6,8 @@ class QuitInCase(Exception):
 
     Args:
         Exception (class): The class for the Exception object.
+        
+    Main Author: Ryan Borak
     """
     pass
 
@@ -20,6 +22,8 @@ def quitinput(prompt):
 
     Returns:
         str: The input of the user.
+        
+    Main Author: Ryan Borak
     """
     userinput = input(prompt)
     if userinput.strip().lower() == "quit":
@@ -36,6 +40,8 @@ class ShowupShowoutShowdown:
             player_name (str): Represents the name of the player.
             player_hp (int, optional): Represents the health points of the player. Defaults to 100.
             computer_hp (int, optional): Represents the health points of the computer. Defaults to 100.
+            
+        Main Author: Ross Zaslavsky
         """
         self.player_name = player_name
         self.player_hp = player_hp
@@ -51,13 +57,17 @@ class ShowupShowoutShowdown:
     
     
     def __eq__(self, other):
-        """_summary_
+        """Check if this instance of ShowupShowoutShowdown is equal to another instance.
 
         Args:
-            other (_type_): _description_
+            other (ShowupShowoutShowdown): The other instance to compare.
 
         Returns:
-            _type_: _description_
+            bool: True if the instances are equal, False otherwise.
+            
+        Main Author: Ross Zaslavsky
+        
+        Technique(s) Demonstrated: magic methods other than __init__()
         """
         return (isinstance(other, ShowupShowoutShowdown)
                 and self.player_name == other.player_name
@@ -73,19 +83,41 @@ class ShowupShowoutShowdown:
                 and self.winner == other.winner)
     
     def __str__(self):
+        """Returns an informal string representation of this instance of the class.
+
+        Returns:
+            str: An informal string representation of the instance, including the player's name and HP, and the computer's HP.
+        
+        Main Author: Ross Zaslavsky
+
+        Technique(s) Demonstrated: magic methods other than __init__()
+        """
         return f"Player: {self.player_name} | Player HP: {self.player_hp} | Computer HP: {self.computer_hp}"
     
     def __repr__(self):
+        """Returns a formal string representation of this instance of the class.
+
+        Returns:
+            str: A formal string representation of the instance that can be used to recreate it.
+            
+        Main Author: Ross Zaslavsky
+    
+        Technique(s) Demonstrated: magic methods other than __init__()
+        """
         return f"ShowupShowoutShowdown(player_name='{self.player_name}', player_hp={self.player_hp}, computer_hp={self.computer_hp})"
     
     def __contains__(self, item):
-        """_summary_
+        """Checks if the given item is present in the fighters dictionary.
 
         Args:
-            item (_type_): _description_
+        item (str): The name of the fighter to check.
 
         Returns:
-            _type_: _description_
+            str: A string representation of the fighter if present in the fighters dictionary, otherwise a string indicating that the fighter is not in the list.
+        
+        Main Author: Ross Zaslavsky
+    
+        Technique(s) Demonstrated: magic methods other than __init__()
         """
         if item in self.fighters:
             return str(self.fighters[item])
@@ -93,7 +125,14 @@ class ShowupShowoutShowdown:
             return f"{item} is not in the fighters list."
     
     def welcome(self):
-        """Function that welcomes player and explains rules"""
+        """Prints out a welcome message for the player and explains the rules of the game.
+
+        Returns: None
+        
+        Main Author: Noah Kandel
+        
+        Technique(s) Demonstrated: f-strings containing expressions
+        """
         print(f"Thank you for showing up, {self.player_name}! Welcome to Showup, Showout, Showdown!")
         print("\nThis is a turn-based battle game where you either attack your opponent or heal yourself until there is only one fighter left standing!")
 
@@ -102,7 +141,15 @@ class ShowupShowoutShowdown:
         print(f"Please select your fighter, {self.player_name}!\n")
 
     def load_fighters(self):
-        """Method that loads in the fighters and their stats from the fighters.txt file
+        """Loads the fighters' data from a file and populates the 'fighters' dictionary.
+        The file should be in the format: 'fighter,attack_power,heal_power'. Each line in the file represents a different fighter.
+
+        Returns:
+            None
+            
+        Main Authors: Ross Zaslavsky, Noah Kandel
+        
+        Technique(s) Demonstrated: with statements, sequence unpacking
         """
         with open('fighters.txt', mode='r', encoding='utf-8') as fighter_file:
             for line in fighter_file.readlines():
@@ -115,6 +162,14 @@ class ShowupShowoutShowdown:
         fighter_file.close()
 
     def select_fighter(self):
+        """Allows the player to select their fighter, validates the selection and sets the selected fighter and CPU fighter.
+        
+        Returns: None
+        
+        Main Author: Ross Zaslavsky
+        
+        Technique(s) Demonstrated: set operations on sets 
+        """
         self.selected_fighter = quitinput("Please enter the name of your fighter: ")
         while self.selected_fighter not in self.fighters:
             print("Invalid fighter name.")
@@ -128,6 +183,16 @@ class ShowupShowoutShowdown:
             print(f"{self.selected_fighter}: Attack Power: {self.fighters[self.selected_fighter]['attack_power']}, Heal Power: {self.fighters[self.selected_fighter]['heal_power']}")
     
     def computer_move(self):
+        """
+        Makes a move for the computer player.
+
+        Chooses between attacking or healing. 
+        - If attacking, calculate damage based on the computer player's attack power and the critical hit chance. 
+        - If healing, calculate the amount of health regained based on the computer 
+        player's heal power and the critical heal chance.
+        
+        Main Author: Ross Zaslavsky
+        """
         self.computer_turn = True
         cpu_move = random.choice(["attack", "heal"])
         if cpu_move == "attack":
@@ -146,6 +211,19 @@ class ShowupShowoutShowdown:
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
     def player_move(self):
+        """Prompt the user to select a move and execute it.
+
+        Asks the user to select a move until a valid move is provided.
+        - If the user selects 'attack', calculate the damage dealt to the computer and prints a message. 
+        - If the user selects 'heal', the method calculates the amount of health
+        restored to the player and prints a message. 
+        - If the damage heal amount is critical, the message indicates that. 
+        - Finally, it updates the player and computer health points and prints them.
+        
+        Main Author: Ross Zaslavsky
+        
+        Technique(s) Demonstrated: regular expressions
+        """
         self.player_turn = True
         valid_moves = ["attack", "heal"]
         while True:
@@ -170,9 +248,30 @@ class ShowupShowoutShowdown:
         print(f"\nPlayer health: {self.player_hp}, Computer health: {self.computer_hp}")
 
     def determine_winner(self):
+        """Determines the winner of the game.
+
+        - If the player's health points are less than or equal to 0, the computer is declared as the winner.
+        - If the computer's health points are less than or equal to 0, the player is declared as the winner.
+        - If neither condition is met, the winner remains None.
+        
+        Main Author: Ryan Borak
+        
+        Technique(s) Demonstrated: Conditional expressions
+        """
         self.winner = "Computer" if self.player_hp <= 0 else self.player_name if self.computer_hp <= 0 else None
 
     def play_again(self):
+        """Prompts the player to choose whether or not to play again.
+
+        - If the player chooses 'no', the game state variable `play_more` is set to False, indicating that the player
+        does not want to play again. 
+        - If the player chooses 'yes', `play_more` is set to True, indicating that the player
+        wants to play again.
+        
+        Main Authors: Ryan Borak, Ross Zaslavsky
+        
+        Technique(s) Demonstrated: Conditional expressions, regular expressions
+        """
         while True:
             play_again = quitinput("Would you like to play again? (yes/no): ")
             if not re.match(r'(?i)^(yes|no)$', play_again):
@@ -182,6 +281,13 @@ class ShowupShowoutShowdown:
         self.play_more = False if play_again.strip().lower() == "no" else True
 
     def play_game(self):
+        """Starts a new game of Fighters.
+
+        Returns:
+            None
+            
+        Main Author: Ross Zaslavsky
+        """
         self.welcome()
         self.load_fighters()
         
@@ -209,6 +315,20 @@ class ShowupShowoutShowdown:
         print(f"Thanks for playing, {self.player_name}! Show up and show out again soon!")
             
 def main():
+    """
+    The entry point of the game. This prompts the player to enter their name and creates a new instance
+    of the ShowupShowoutShowdown class. The game is played until the player chooses to quit.
+    
+    Parameters:
+        None
+
+    Returns:
+        None
+        
+    Main Author: Ross Zaslavsky
+    
+    Technique(s) Demonstrated: Regular expressions
+    """
     try: 
         while True:
             player_name = quitinput("Enter your name: ")
