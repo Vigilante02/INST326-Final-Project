@@ -42,7 +42,7 @@ class ShowupShowoutShowdown:
             player_hp (int, optional): Represents the health points of the player. Defaults to 100.
             computer_hp (int, optional): Represents the health points of the computer. Defaults to 100.
             
-        Main Author: Ross Zaslavsky
+        Main Author: Noah Kandel
         """
         self.player_name = player_name
         self.player_hp = player_hp
@@ -130,7 +130,7 @@ class ShowupShowoutShowdown:
 
         Returns: None
         
-        Main Author: Noah Kandel
+        Main Author: Ryan Borak
         
         Technique(s) Demonstrated: f-strings containing expressions
         """
@@ -148,7 +148,7 @@ class ShowupShowoutShowdown:
         Returns:
             None
             
-        Main Authors: Ross Zaslavsky, Noah Kandel
+        Main Authors: Noah Kandel
         
         Technique(s) Demonstrated: with statements, sequence unpacking
         """
@@ -287,7 +287,9 @@ class ShowupShowoutShowdown:
         Returns:
             None
             
-        Main Author: Ross Zaslavsky
+        Main Author: Ryan Borak
+        
+        Technique(s) Demonstrated: f-strings containing expressions
         """
         self.welcome()
         self.load_fighters()
