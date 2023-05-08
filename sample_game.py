@@ -1,3 +1,4 @@
+"""A turn-based fighter game called Showup, Showout, Showdown where the user fights against a cpu fighter"""
 import random
 import re
 
