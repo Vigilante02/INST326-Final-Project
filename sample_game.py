@@ -41,7 +41,13 @@ class ShowupShowoutShowdown:
             player_name (str): Represents the name of the player.
             player_hp (int, optional): Represents the health points of the player. Defaults to 100.
             computer_hp (int, optional): Represents the health points of the computer. Defaults to 100.
-            
+        
+        Side Effects:
+            - Initializes the instance variables for the class, including the player's name and health points,
+              the computer's health points, the dictionary of fighters, the selected fighter, the computer's
+              selected fighter, the dictionary of computer powers, the player's turn status, the computer's
+              turn status, the play more flag, and the winner variable.
+        
         Main Author: Noah Kandel
         """
         self.player_name = player_name
@@ -255,6 +261,9 @@ class ShowupShowoutShowdown:
         - If the computer's health points are less than or equal to 0, the player is declared as the winner.
         - If neither condition is met, the winner remains None.
         
+        Returns: str or None: The winner of the game, as determined by the method. Returns "Computer" if the computer wins,
+        the player's name if the player wins, and None if neither wins.
+        
         Main Author: Ryan Borak
         
         Technique(s) Demonstrated: Conditional expressions
@@ -347,5 +356,3 @@ def main():
 
 if __name__ == '__main__':
     main()
-    
-    
